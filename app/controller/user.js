@@ -1,3 +1,4 @@
+'use strict';
 const Controller = require('egg').Controller;
 
 // Controller 基类有下列属性:
@@ -6,12 +7,13 @@ const Controller = require('egg').Controller;
 // config - 应用的配置。
 // service - 应用所有的 service。
 // logger - 为当前 controller 封装的 logger 对象。
-class UserController extends Controller{
-    async fetch(){
-        const {app,ctx} = this;
-        const {id} = ctx.request.query;
-        ctx.body = app.cache.get(id);
-    }
+class UserController extends Controller {
+  async index() {
+    const { ctx, service } = this;
+    const id = await ctx.params.id;
+    // await service.user.getUser()
+    ctx.body = await service.user.getUser(id);
+  }
 }
 
 module.exports = UserController;
