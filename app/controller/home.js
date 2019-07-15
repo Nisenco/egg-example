@@ -19,9 +19,10 @@ class HomeController extends Controller {
     const pageIndex = ctx.query.pageIndex || '';
     const pageSize = ctx.query.pageSize || 20;
     const dataList = await service.user.getData(pageIndex, pageSize);
-    await service.user.saveDB(dataList);
+    // await service.user.saveDB(dataList);
     // const insertDataBase = await service.user.saveDB(dataList);
     const errStatus = dataList.data;
+    console.log(dataList, '=+++');
     let _length = dataList.data.length;
     const temp = {
       state: errStatus ? '0' : '10',

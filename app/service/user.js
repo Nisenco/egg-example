@@ -11,20 +11,22 @@ class UserService extends Service {
     return result;
   }
 
-  async getData(pageIndex, pageSize) {
+  async getData() {
     const { ctx, app } = this;
+    const { lastCursor } = app.cache;
+    const pageSize = ctx.query.pageSize || 20;
     const { serverUrl } = app.config.readhub;
     try {
-      const topicUrl = `${serverUrl}/topic?lastCursor=${pageIndex}&pageSize=${pageSize}`;
+      const topicUrl = `${serverUrl}/topic?lastCursor=${lastCursor}&pageSize=${pageSize}`;
       const result = await ctx.curl(topicUrl, {
         dataType: 'json',
         followRedirect: true, // followRedirect {Boolean} - 将HTTP 3xx响应作为重定向。默认为false。
       });
+      console.log(result, '----service----');
       if (result.status === 200) {
         return result.data;
-      } else {
-        return result;
       }
+      return result;
     } catch (error) {
       console.log(error);
     }

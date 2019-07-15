@@ -25,7 +25,7 @@ module.exports = appInfo => {
       database: 'news',
     },
     // 是否加载到 app 上，默认开启
-    app: true,
+    app: false,
     // 是否加载到 agent 上，默认关闭
     agent: false,
   };
